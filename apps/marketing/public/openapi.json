@@ -1,0 +1,2090 @@
+{
+   "openapi": "3.0.0",
+   "info": {
+      "title": "tRPC HTTP-RPC",
+      "version": ""
+   },
+   "paths": {
+      "/api/trpc/health": {
+         "get": {
+            "tags": [],
+            "operationId": "health",
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            },
+            "parameters": [
+               {
+                  "in": "query",
+                  "name": "input",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {},
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            ]
+         }
+      },
+      "/api/trpc/auth.signup": {
+         "post": {
+            "tags": [
+               "auth"
+            ],
+            "description": "Create a new account.",
+            "summary": "Sign Up",
+            "operationId": "auth.signup",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {
+                                    "data": {
+                                       "type": "object",
+                                       "properties": {
+                                          "id": {
+                                             "type": "number"
+                                          },
+                                          "name": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "email": {
+                                             "type": "string"
+                                          },
+                                          "emailVerified": {
+                                             "anyOf": [
+                                                {
+                                                   "type": "string",
+                                                   "format": "date-time"
+                                                },
+                                                {
+                                                   "type": "null"
+                                                }
+                                             ]
+                                          },
+                                          "password": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "source": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "signature": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "roles": {
+                                             "type": "array",
+                                             "items": {
+                                                "type": "string",
+                                                "enum": [
+                                                   "ADMIN",
+                                                   "USER"
+                                                ]
+                                             }
+                                          },
+                                          "identityProvider": {
+                                             "type": "string",
+                                             "enum": [
+                                                "DOCUMENSO",
+                                                "GOOGLE"
+                                             ]
+                                          }
+                                       },
+                                       "required": [
+                                          "id",
+                                          "name",
+                                          "email",
+                                          "emailVerified",
+                                          "password",
+                                          "source",
+                                          "signature",
+                                          "roles",
+                                          "identityProvider"
+                                       ],
+                                       "additionalProperties": false
+                                    }
+                                 },
+                                 "required": [
+                                    "data"
+                                 ],
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "name": {
+                              "type": "string",
+                              "minLength": 1
+                           },
+                           "email": {
+                              "type": "string",
+                              "format": "email"
+                           },
+                           "password": {
+                              "type": "string",
+                              "minLength": 6
+                           },
+                           "signature": {
+                              "type": "string",
+                              "minLength": 1
+                           }
+                        },
+                        "required": [
+                           "name",
+                           "email",
+                           "password",
+                           "signature"
+                        ],
+                        "additionalProperties": false
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/api/trpc/profile.getUser": {
+         "get": {
+            "tags": [
+               "profile"
+            ],
+            "description": "Retrieve User by [id]. (Required to be Admin).",
+            "summary": "Retrieve User (as Admin)",
+            "operationId": "profile.getUser",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {
+                                    "data": {
+                                       "type": "object",
+                                       "properties": {
+                                          "id": {
+                                             "type": "number"
+                                          },
+                                          "name": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "email": {
+                                             "type": "string"
+                                          },
+                                          "emailVerified": {
+                                             "anyOf": [
+                                                {
+                                                   "type": "string",
+                                                   "format": "date-time"
+                                                },
+                                                {
+                                                   "type": "null"
+                                                }
+                                             ]
+                                          },
+                                          "password": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "source": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "signature": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "roles": {
+                                             "type": "array",
+                                             "items": {
+                                                "type": "string",
+                                                "enum": [
+                                                   "ADMIN",
+                                                   "USER"
+                                                ]
+                                             }
+                                          },
+                                          "identityProvider": {
+                                             "type": "string",
+                                             "enum": [
+                                                "DOCUMENSO",
+                                                "GOOGLE"
+                                             ]
+                                          }
+                                       },
+                                       "required": [
+                                          "id",
+                                          "name",
+                                          "email",
+                                          "emailVerified",
+                                          "password",
+                                          "source",
+                                          "signature",
+                                          "roles",
+                                          "identityProvider"
+                                       ],
+                                       "additionalProperties": false
+                                    }
+                                 },
+                                 "required": [
+                                    "data"
+                                 ],
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "parameters": [
+               {
+                  "in": "query",
+                  "name": "input",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "id": {
+                                 "type": "number",
+                                 "minimum": 1
+                              }
+                           },
+                           "required": [
+                              "id"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            ]
+         }
+      },
+      "/api/trpc/profile.updateProfile": {
+         "post": {
+            "tags": [
+               "profile"
+            ],
+            "description": "Update User Profile. (Required to be Authenticated).",
+            "summary": "Update User Profile",
+            "operationId": "profile.updateProfile",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {
+                                    "data": {
+                                       "type": "object",
+                                       "properties": {
+                                          "id": {
+                                             "type": "number"
+                                          },
+                                          "name": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "email": {
+                                             "type": "string"
+                                          },
+                                          "emailVerified": {
+                                             "anyOf": [
+                                                {
+                                                   "type": "string",
+                                                   "format": "date-time"
+                                                },
+                                                {
+                                                   "type": "null"
+                                                }
+                                             ]
+                                          },
+                                          "password": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "source": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "signature": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "roles": {
+                                             "type": "array",
+                                             "items": {
+                                                "type": "string",
+                                                "enum": [
+                                                   "ADMIN",
+                                                   "USER"
+                                                ]
+                                             }
+                                          },
+                                          "identityProvider": {
+                                             "type": "string",
+                                             "enum": [
+                                                "DOCUMENSO",
+                                                "GOOGLE"
+                                             ]
+                                          }
+                                       },
+                                       "required": [
+                                          "id",
+                                          "name",
+                                          "email",
+                                          "emailVerified",
+                                          "password",
+                                          "source",
+                                          "signature",
+                                          "roles",
+                                          "identityProvider"
+                                       ],
+                                       "additionalProperties": false
+                                    }
+                                 },
+                                 "required": [
+                                    "data"
+                                 ],
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "name": {
+                              "type": "string",
+                              "minLength": 1
+                           },
+                           "signature": {
+                              "type": "string"
+                           }
+                        },
+                        "required": [
+                           "name",
+                           "signature"
+                        ],
+                        "additionalProperties": false
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/api/trpc/profile.updatePassword": {
+         "post": {
+            "tags": [
+               "profile"
+            ],
+            "description": "Update User Password. (Required to be Authenticated).",
+            "summary": "Update User Password",
+            "operationId": "profile.updatePassword",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {
+                                    "data": {
+                                       "type": "object",
+                                       "properties": {
+                                          "id": {
+                                             "type": "number"
+                                          },
+                                          "name": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "email": {
+                                             "type": "string"
+                                          },
+                                          "emailVerified": {
+                                             "anyOf": [
+                                                {
+                                                   "type": "string",
+                                                   "format": "date-time"
+                                                },
+                                                {
+                                                   "type": "null"
+                                                }
+                                             ]
+                                          },
+                                          "password": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "source": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "signature": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "roles": {
+                                             "type": "array",
+                                             "items": {
+                                                "type": "string",
+                                                "enum": [
+                                                   "ADMIN",
+                                                   "USER"
+                                                ]
+                                             }
+                                          },
+                                          "identityProvider": {
+                                             "type": "string",
+                                             "enum": [
+                                                "DOCUMENSO",
+                                                "GOOGLE"
+                                             ]
+                                          }
+                                       },
+                                       "required": [
+                                          "id",
+                                          "name",
+                                          "email",
+                                          "emailVerified",
+                                          "password",
+                                          "source",
+                                          "signature",
+                                          "roles",
+                                          "identityProvider"
+                                       ],
+                                       "additionalProperties": false
+                                    }
+                                 },
+                                 "required": [
+                                    "data"
+                                 ],
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "currentPassword": {
+                              "type": "string",
+                              "minLength": 6
+                           },
+                           "password": {
+                              "type": "string",
+                              "minLength": 6
+                           }
+                        },
+                        "required": [
+                           "currentPassword",
+                           "password"
+                        ],
+                        "additionalProperties": false
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/api/trpc/profile.forgotPassword": {
+         "post": {
+            "tags": [
+               "profile"
+            ],
+            "description": "Forgot Password?? Get Password Reset Link.",
+            "summary": "Get Password Reset Link",
+            "operationId": "profile.forgotPassword",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {},
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "email": {
+                              "type": "string",
+                              "format": "email",
+                              "minLength": 1
+                           }
+                        },
+                        "required": [
+                           "email"
+                        ],
+                        "additionalProperties": false
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/api/trpc/profile.resetPassword": {
+         "post": {
+            "tags": [
+               "profile"
+            ],
+            "description": "Reset User Password.",
+            "summary": "Reset Password",
+            "operationId": "profile.resetPassword",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {},
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "password": {
+                              "type": "string",
+                              "minLength": 6
+                           },
+                           "token": {
+                              "type": "string",
+                              "minLength": 1
+                           }
+                        },
+                        "required": [
+                           "password",
+                           "token"
+                        ],
+                        "additionalProperties": false
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/api/trpc/document.getDocumentById": {
+         "get": {
+            "tags": [
+               "document"
+            ],
+            "description": "Search or get Document by [id]. (Requires to be Authenticated).",
+            "summary": "Get Document by [id]",
+            "operationId": "document.getDocumentById",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {
+                                    "data": {
+                                       "type": "object",
+                                       "properties": {
+                                          "id": {
+                                             "type": "number"
+                                          },
+                                          "userId": {
+                                             "type": "number"
+                                          },
+                                          "title": {
+                                             "type": "string"
+                                          },
+                                          "status": {
+                                             "type": "string",
+                                             "enum": [
+                                                "DRAFT",
+                                                "PENDING",
+                                                "COMPLETED"
+                                             ]
+                                          },
+                                          "documentDataId": {
+                                             "type": "string"
+                                          },
+                                          "createdAt": {
+                                             "type": "string",
+                                             "format": "date-time"
+                                          },
+                                          "updatedAt": {
+                                             "type": "string",
+                                             "format": "date-time"
+                                          },
+                                          "documentData": {
+                                             "type": "object",
+                                             "properties": {
+                                                "id": {
+                                                   "type": "string"
+                                                },
+                                                "type": {
+                                                   "type": "string",
+                                                   "enum": [
+                                                      "S3_PATH",
+                                                      "BYTES",
+                                                      "BYTES_64"
+                                                   ]
+                                                },
+                                                "data": {
+                                                   "type": "string"
+                                                },
+                                                "initialData": {
+                                                   "type": "string"
+                                                }
+                                             },
+                                             "required": [
+                                                "id",
+                                                "type",
+                                                "data",
+                                                "initialData"
+                                             ],
+                                             "additionalProperties": false
+                                          },
+                                          "documentMeta": {
+                                             "anyOf": [
+                                                {
+                                                   "type": "object",
+                                                   "properties": {
+                                                      "id": {
+                                                         "type": "string"
+                                                      },
+                                                      "subject": {
+                                                         "type": [
+                                                            "string",
+                                                            "null"
+                                                         ]
+                                                      },
+                                                      "message": {
+                                                         "type": [
+                                                            "string",
+                                                            "null"
+                                                         ]
+                                                      },
+                                                      "documentId": {
+                                                         "type": "number"
+                                                      }
+                                                   },
+                                                   "required": [
+                                                      "id",
+                                                      "subject",
+                                                      "message",
+                                                      "documentId"
+                                                   ],
+                                                   "additionalProperties": false
+                                                },
+                                                {
+                                                   "type": "null"
+                                                }
+                                             ]
+                                          }
+                                       },
+                                       "required": [
+                                          "id",
+                                          "userId",
+                                          "title",
+                                          "status",
+                                          "documentDataId",
+                                          "createdAt",
+                                          "updatedAt",
+                                          "documentData",
+                                          "documentMeta"
+                                       ],
+                                       "additionalProperties": false
+                                    }
+                                 },
+                                 "required": [
+                                    "data"
+                                 ],
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "parameters": [
+               {
+                  "in": "query",
+                  "name": "input",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "id": {
+                                 "type": "number",
+                                 "minimum": 1
+                              }
+                           },
+                           "required": [
+                              "id"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            ]
+         }
+      },
+      "/api/trpc/document.getDocumentByToken": {
+         "get": {
+            "tags": [
+               "document"
+            ],
+            "description": "Search or get Document by [token].",
+            "summary": "Get Document by [token]",
+            "operationId": "document.getDocumentByToken",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {
+                                    "data": {
+                                       "type": "object",
+                                       "properties": {
+                                          "id": {
+                                             "type": "number"
+                                          },
+                                          "userId": {
+                                             "type": "number"
+                                          },
+                                          "title": {
+                                             "type": "string"
+                                          },
+                                          "status": {
+                                             "type": "string",
+                                             "enum": [
+                                                "DRAFT",
+                                                "PENDING",
+                                                "COMPLETED"
+                                             ]
+                                          },
+                                          "documentDataId": {
+                                             "type": "string"
+                                          },
+                                          "createdAt": {
+                                             "type": "string",
+                                             "format": "date-time"
+                                          },
+                                          "updatedAt": {
+                                             "type": "string",
+                                             "format": "date-time"
+                                          },
+                                          "documentData": {
+                                             "type": "object",
+                                             "properties": {
+                                                "id": {
+                                                   "type": "string"
+                                                },
+                                                "type": {
+                                                   "type": "string",
+                                                   "enum": [
+                                                      "S3_PATH",
+                                                      "BYTES",
+                                                      "BYTES_64"
+                                                   ]
+                                                },
+                                                "data": {
+                                                   "type": "string"
+                                                },
+                                                "initialData": {
+                                                   "type": "string"
+                                                }
+                                             },
+                                             "required": [
+                                                "id",
+                                                "type",
+                                                "data",
+                                                "initialData"
+                                             ],
+                                             "additionalProperties": false
+                                          },
+                                          "User": {
+                                             "type": "object",
+                                             "properties": {
+                                                "id": {
+                                                   "type": "number"
+                                                },
+                                                "name": {
+                                                   "type": [
+                                                      "string",
+                                                      "null"
+                                                   ]
+                                                },
+                                                "email": {
+                                                   "type": "string"
+                                                },
+                                                "emailVerified": {
+                                                   "anyOf": [
+                                                      {
+                                                         "type": "string",
+                                                         "format": "date-time"
+                                                      },
+                                                      {
+                                                         "type": "null"
+                                                      }
+                                                   ]
+                                                },
+                                                "source": {
+                                                   "type": [
+                                                      "string",
+                                                      "null"
+                                                   ]
+                                                },
+                                                "signature": {
+                                                   "type": [
+                                                      "string",
+                                                      "null"
+                                                   ]
+                                                },
+                                                "roles": {
+                                                   "type": "array",
+                                                   "items": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                         "ADMIN",
+                                                         "USER"
+                                                      ]
+                                                   }
+                                                },
+                                                "identityProvider": {
+                                                   "type": "string",
+                                                   "enum": [
+                                                      "DOCUMENSO",
+                                                      "GOOGLE"
+                                                   ]
+                                                }
+                                             },
+                                             "required": [
+                                                "id",
+                                                "name",
+                                                "email",
+                                                "emailVerified",
+                                                "source",
+                                                "signature",
+                                                "roles",
+                                                "identityProvider"
+                                             ],
+                                             "additionalProperties": false
+                                          }
+                                       },
+                                       "required": [
+                                          "id",
+                                          "userId",
+                                          "title",
+                                          "status",
+                                          "documentDataId",
+                                          "createdAt",
+                                          "updatedAt",
+                                          "documentData",
+                                          "User"
+                                       ],
+                                       "additionalProperties": false
+                                    }
+                                 },
+                                 "required": [
+                                    "data"
+                                 ],
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "parameters": [
+               {
+                  "in": "query",
+                  "name": "input",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "token": {
+                                 "type": "string",
+                                 "minLength": 1
+                              }
+                           },
+                           "required": [
+                              "token"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            ]
+         }
+      },
+      "/api/trpc/document.createDocument": {
+         "post": {
+            "tags": [
+               "document"
+            ],
+            "description": "Create a new Document. (Requires to be Authenticated).",
+            "summary": "Create Document",
+            "operationId": "document.createDocument",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {
+                                    "data": {
+                                       "type": "object",
+                                       "properties": {
+                                          "id": {
+                                             "type": "number"
+                                          },
+                                          "userId": {
+                                             "type": "number"
+                                          },
+                                          "title": {
+                                             "type": "string"
+                                          },
+                                          "status": {
+                                             "type": "string",
+                                             "enum": [
+                                                "DRAFT",
+                                                "PENDING",
+                                                "COMPLETED"
+                                             ]
+                                          },
+                                          "documentDataId": {
+                                             "type": "string"
+                                          },
+                                          "createdAt": {
+                                             "type": "string",
+                                             "format": "date-time"
+                                          },
+                                          "updatedAt": {
+                                             "type": "string",
+                                             "format": "date-time"
+                                          }
+                                       },
+                                       "required": [
+                                          "id",
+                                          "userId",
+                                          "title",
+                                          "status",
+                                          "documentDataId",
+                                          "createdAt",
+                                          "updatedAt"
+                                       ],
+                                       "additionalProperties": false
+                                    }
+                                 },
+                                 "required": [
+                                    "data"
+                                 ],
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "title": {
+                              "type": "string",
+                              "minLength": 1
+                           },
+                           "documentDataId": {
+                              "type": "string",
+                              "minLength": 1
+                           }
+                        },
+                        "required": [
+                           "title",
+                           "documentDataId"
+                        ],
+                        "additionalProperties": false
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/api/trpc/document.deleteDraftDocument": {
+         "post": {
+            "tags": [
+               "document"
+            ],
+            "description": "Delete dcoument. Only possible if {document.status===DRAFT}. (Requires to be Authenticated).",
+            "summary": "Delete Document",
+            "operationId": "document.deleteDraftDocument",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {
+                                    "data": {
+                                       "type": "object",
+                                       "properties": {
+                                          "id": {
+                                             "type": "number"
+                                          },
+                                          "userId": {
+                                             "type": "number"
+                                          },
+                                          "title": {
+                                             "type": "string"
+                                          },
+                                          "status": {
+                                             "type": "string",
+                                             "enum": [
+                                                "DRAFT",
+                                                "PENDING",
+                                                "COMPLETED"
+                                             ]
+                                          },
+                                          "documentDataId": {
+                                             "type": "string"
+                                          },
+                                          "createdAt": {
+                                             "type": "string",
+                                             "format": "date-time"
+                                          },
+                                          "updatedAt": {
+                                             "type": "string",
+                                             "format": "date-time"
+                                          }
+                                       },
+                                       "required": [
+                                          "id",
+                                          "userId",
+                                          "title",
+                                          "status",
+                                          "documentDataId",
+                                          "createdAt",
+                                          "updatedAt"
+                                       ],
+                                       "additionalProperties": false
+                                    }
+                                 },
+                                 "required": [
+                                    "data"
+                                 ],
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "id": {
+                              "type": "number",
+                              "minimum": 1
+                           }
+                        },
+                        "required": [
+                           "id"
+                        ],
+                        "additionalProperties": false
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/api/trpc/document.setRecipientsForDocument": {
+         "post": {
+            "tags": [
+               "document"
+            ],
+            "description": "Add signers for Document. (Requires to be Authenticated).",
+            "summary": "Add Signers for Document",
+            "operationId": "document.setRecipientsForDocument",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {
+                                    "data": {
+                                       "type": "array",
+                                       "items": {
+                                          "type": "object",
+                                          "properties": {
+                                             "id": {
+                                                "type": "number"
+                                             },
+                                             "documentId": {
+                                                "type": "number"
+                                             },
+                                             "email": {
+                                                "type": "string"
+                                             },
+                                             "name": {
+                                                "type": "string"
+                                             },
+                                             "token": {
+                                                "type": "string"
+                                             },
+                                             "expired": {
+                                                "anyOf": [
+                                                   {
+                                                      "type": "string",
+                                                      "format": "date-time"
+                                                   },
+                                                   {
+                                                      "type": "null"
+                                                   }
+                                                ]
+                                             },
+                                             "signedAt": {
+                                                "anyOf": [
+                                                   {
+                                                      "type": "string",
+                                                      "format": "date-time"
+                                                   },
+                                                   {
+                                                      "type": "null"
+                                                   }
+                                                ]
+                                             },
+                                             "readStatus": {
+                                                "type": "string",
+                                                "enum": [
+                                                   "NOT_OPENED",
+                                                   "OPENED"
+                                                ]
+                                             },
+                                             "signingStatus": {
+                                                "type": "string",
+                                                "enum": [
+                                                   "NOT_SIGNED",
+                                                   "SIGNED"
+                                                ]
+                                             },
+                                             "sendStatus": {
+                                                "type": "string",
+                                                "enum": [
+                                                   "NOT_SENT",
+                                                   "SENT"
+                                                ]
+                                             }
+                                          },
+                                          "required": [
+                                             "id",
+                                             "documentId",
+                                             "email",
+                                             "name",
+                                             "token",
+                                             "expired",
+                                             "signedAt",
+                                             "readStatus",
+                                             "signingStatus",
+                                             "sendStatus"
+                                          ],
+                                          "additionalProperties": false
+                                       }
+                                    }
+                                 },
+                                 "required": [
+                                    "data"
+                                 ],
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "documentId": {
+                              "type": "number"
+                           },
+                           "recipients": {
+                              "type": "array",
+                              "items": {
+                                 "type": "object",
+                                 "properties": {
+                                    "id": {
+                                       "type": [
+                                          "number",
+                                          "null"
+                                       ]
+                                    },
+                                    "email": {
+                                       "type": "string",
+                                       "minLength": 1,
+                                       "format": "email"
+                                    },
+                                    "name": {
+                                       "type": "string"
+                                    }
+                                 },
+                                 "required": [
+                                    "email",
+                                    "name"
+                                 ],
+                                 "additionalProperties": false
+                              }
+                           }
+                        },
+                        "required": [
+                           "documentId",
+                           "recipients"
+                        ],
+                        "additionalProperties": false
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/api/trpc/document.setFieldsForDocument": {
+         "post": {
+            "tags": [
+               "document"
+            ],
+            "description": "Add Fields for Document. (Requires to be Authenticated).",
+            "summary": "Add Fields for Document",
+            "operationId": "document.setFieldsForDocument",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {
+                                    "data": {
+                                       "type": "array",
+                                       "items": {
+                                          "type": "object",
+                                          "properties": {
+                                             "id": {
+                                                "type": "number"
+                                             },
+                                             "documentId": {
+                                                "type": "number"
+                                             },
+                                             "recipientId": {
+                                                "type": [
+                                                   "number",
+                                                   "null"
+                                                ]
+                                             },
+                                             "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                   "SIGNATURE",
+                                                   "FREE_SIGNATURE",
+                                                   "NAME",
+                                                   "EMAIL",
+                                                   "DATE",
+                                                   "TEXT"
+                                                ]
+                                             },
+                                             "page": {
+                                                "type": "number"
+                                             },
+                                             "positionX": {
+                                                "anyOf": [
+                                                   {
+                                                      "type": "number"
+                                                   },
+                                                   {}
+                                                ]
+                                             },
+                                             "positionY": {
+                                                "anyOf": [
+                                                   {
+                                                      "type": "number"
+                                                   },
+                                                   {}
+                                                ]
+                                             },
+                                             "width": {
+                                                "anyOf": [
+                                                   {
+                                                      "type": "number"
+                                                   },
+                                                   {}
+                                                ]
+                                             },
+                                             "height": {
+                                                "anyOf": [
+                                                   {
+                                                      "type": "number"
+                                                   },
+                                                   {}
+                                                ]
+                                             },
+                                             "customText": {
+                                                "type": "string"
+                                             },
+                                             "inserted": {
+                                                "type": "boolean"
+                                             }
+                                          },
+                                          "required": [
+                                             "id",
+                                             "documentId",
+                                             "recipientId",
+                                             "type",
+                                             "page",
+                                             "customText",
+                                             "inserted"
+                                          ],
+                                          "additionalProperties": false
+                                       }
+                                    }
+                                 },
+                                 "required": [
+                                    "data"
+                                 ],
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "documentId": {
+                              "type": "number"
+                           },
+                           "fields": {
+                              "type": "array",
+                              "items": {
+                                 "type": "object",
+                                 "properties": {
+                                    "id": {
+                                       "type": [
+                                          "number",
+                                          "null"
+                                       ]
+                                    },
+                                    "type": {
+                                       "type": "string",
+                                       "enum": [
+                                          "SIGNATURE",
+                                          "FREE_SIGNATURE",
+                                          "NAME",
+                                          "EMAIL",
+                                          "DATE",
+                                          "TEXT"
+                                       ]
+                                    },
+                                    "signerEmail": {
+                                       "type": "string",
+                                       "minLength": 1
+                                    },
+                                    "pageNumber": {
+                                       "type": "number",
+                                       "minimum": 1
+                                    },
+                                    "pageX": {
+                                       "type": "number",
+                                       "minimum": 0
+                                    },
+                                    "pageY": {
+                                       "type": "number",
+                                       "minimum": 0
+                                    },
+                                    "pageWidth": {
+                                       "type": "number",
+                                       "minimum": 0
+                                    },
+                                    "pageHeight": {
+                                       "type": "number",
+                                       "minimum": 0
+                                    }
+                                 },
+                                 "required": [
+                                    "type",
+                                    "signerEmail",
+                                    "pageNumber",
+                                    "pageX",
+                                    "pageY",
+                                    "pageWidth",
+                                    "pageHeight"
+                                 ],
+                                 "additionalProperties": false
+                              }
+                           }
+                        },
+                        "required": [
+                           "documentId",
+                           "fields"
+                        ],
+                        "additionalProperties": false
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/api/trpc/document.sendDocument": {
+         "post": {
+            "tags": [
+               "document"
+            ],
+            "description": "Send invitation email to recipients for signing document. (Requires to be Authenticated).",
+            "summary": "Send Document Signature Invitation",
+            "operationId": "document.sendDocument",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {
+                                    "data": {
+                                       "type": "object",
+                                       "properties": {
+                                          "id": {
+                                             "type": "number"
+                                          },
+                                          "userId": {
+                                             "type": "number"
+                                          },
+                                          "title": {
+                                             "type": "string"
+                                          },
+                                          "status": {
+                                             "type": "string",
+                                             "enum": [
+                                                "DRAFT",
+                                                "PENDING",
+                                                "COMPLETED"
+                                             ]
+                                          },
+                                          "documentDataId": {
+                                             "type": "string"
+                                          },
+                                          "createdAt": {
+                                             "type": "string",
+                                             "format": "date-time"
+                                          },
+                                          "updatedAt": {
+                                             "type": "string",
+                                             "format": "date-time"
+                                          }
+                                       },
+                                       "required": [
+                                          "id",
+                                          "userId",
+                                          "title",
+                                          "status",
+                                          "documentDataId",
+                                          "createdAt",
+                                          "updatedAt"
+                                       ],
+                                       "additionalProperties": false
+                                    }
+                                 },
+                                 "required": [
+                                    "data"
+                                 ],
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "documentId": {
+                              "type": "number"
+                           }
+                        },
+                        "required": [
+                           "documentId"
+                        ],
+                        "additionalProperties": false
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/api/trpc/field.signFieldWithToken": {
+         "post": {
+            "tags": [
+               "field"
+            ],
+            "description": "Sign a signature field of a Document with [token]",
+            "summary": "Sign Signature Field with [token]",
+            "operationId": "field.signFieldWithToken",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {},
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "token": {
+                              "type": "string"
+                           },
+                           "fieldId": {
+                              "type": "number"
+                           },
+                           "value": {
+                              "type": "string"
+                           },
+                           "isBase64": {
+                              "type": "boolean"
+                           }
+                        },
+                        "required": [
+                           "token",
+                           "fieldId",
+                           "value"
+                        ],
+                        "additionalProperties": false
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/api/trpc/field.removeSignedFieldWithToken": {
+         "post": {
+            "tags": [
+               "field"
+            ],
+            "description": "Remove a signature field from a Document with [token]. Only possible if {recipient.signing===NOT_SIGNED}.",
+            "summary": "Remove Signature Field with [token]",
+            "operationId": "field.removeSignedFieldWithToken",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {},
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "token": {
+                              "type": "string"
+                           },
+                           "fieldId": {
+                              "type": "number"
+                           }
+                        },
+                        "required": [
+                           "token",
+                           "fieldId"
+                        ],
+                        "additionalProperties": false
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/api/trpc/admin.updateUser": {
+         "post": {
+            "tags": [
+               "admin"
+            ],
+            "description": "Update User. (Requires to be Admin).",
+            "summary": "Update User (as Admin)",
+            "operationId": "admin.updateUser",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {
+                                    "data": {
+                                       "type": "object",
+                                       "properties": {
+                                          "id": {
+                                             "type": "number"
+                                          },
+                                          "name": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "email": {
+                                             "type": "string"
+                                          },
+                                          "emailVerified": {
+                                             "anyOf": [
+                                                {
+                                                   "type": "string",
+                                                   "format": "date-time"
+                                                },
+                                                {
+                                                   "type": "null"
+                                                }
+                                             ]
+                                          },
+                                          "password": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "source": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "signature": {
+                                             "type": [
+                                                "string",
+                                                "null"
+                                             ]
+                                          },
+                                          "roles": {
+                                             "type": "array",
+                                             "items": {
+                                                "type": "string",
+                                                "enum": [
+                                                   "ADMIN",
+                                                   "USER"
+                                                ]
+                                             }
+                                          },
+                                          "identityProvider": {
+                                             "type": "string",
+                                             "enum": [
+                                                "DOCUMENSO",
+                                                "GOOGLE"
+                                             ]
+                                          }
+                                       },
+                                       "required": [
+                                          "id",
+                                          "name",
+                                          "email",
+                                          "emailVerified",
+                                          "password",
+                                          "source",
+                                          "signature",
+                                          "roles",
+                                          "identityProvider"
+                                       ],
+                                       "additionalProperties": false
+                                    }
+                                 },
+                                 "required": [
+                                    "data"
+                                 ],
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "id": {
+                              "type": "number",
+                              "minimum": 1
+                           },
+                           "name": {
+                              "type": [
+                                 "string",
+                                 "null"
+                              ]
+                           },
+                           "email": {
+                              "type": "string",
+                              "format": "email"
+                           },
+                           "roles": {
+                              "type": "array",
+                              "items": {
+                                 "type": "string",
+                                 "enum": [
+                                    "ADMIN",
+                                    "USER"
+                                 ]
+                              }
+                           }
+                        },
+                        "required": [
+                           "id"
+                        ],
+                        "additionalProperties": false
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/api/trpc/shareLink.createOrGetShareLink": {
+         "post": {
+            "tags": [
+               "shareLink"
+            ],
+            "description": "Completed your Document Signature. Get Document Share Link.",
+            "summary": "Get Document Share Link",
+            "operationId": "shareLink.createOrGetShareLink",
+            "responses": {
+               "200": {
+                  "description": "",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "result": {
+                                 "type": "object",
+                                 "properties": {
+                                    "data": {
+                                       "type": "object",
+                                       "properties": {
+                                          "id": {
+                                             "type": "number"
+                                          },
+                                          "email": {
+                                             "type": "string"
+                                          },
+                                          "slug": {
+                                             "type": "string"
+                                          },
+                                          "documentId": {
+                                             "type": "number"
+                                          },
+                                          "createdAt": {
+                                             "type": "string",
+                                             "format": "date-time"
+                                          },
+                                          "updatedAt": {
+                                             "type": "string",
+                                             "format": "date-time"
+                                          }
+                                       },
+                                       "required": [
+                                          "id",
+                                          "email",
+                                          "slug",
+                                          "documentId",
+                                          "createdAt",
+                                          "updatedAt"
+                                       ],
+                                       "additionalProperties": false
+                                    }
+                                 },
+                                 "required": [
+                                    "data"
+                                 ],
+                                 "additionalProperties": false
+                              }
+                           },
+                           "required": [
+                              "result"
+                           ],
+                           "additionalProperties": false
+                        }
+                     }
+                  }
+               }
+            },
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "documentId": {
+                              "type": "number"
+                           },
+                           "token": {
+                              "type": "string"
+                           }
+                        },
+                        "required": [
+                           "documentId"
+                        ],
+                        "additionalProperties": false
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+}

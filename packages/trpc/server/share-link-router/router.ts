@@ -3,11 +3,19 @@ import { TRPCError } from '@trpc/server';
 import { createOrGetShareLink } from '@documenso/lib/server-only/share/create-or-get-share-link';
 
 import { procedure, router } from '../trpc';
-import { ZCreateOrGetShareLinkMutationSchema } from './schema';
+import {
+  ZCreateOrGetShareLinkMutationOutputSchema,
+  ZCreateOrGetShareLinkMutationSchema,
+} from './schema';
 
 export const shareLinkRouter = router({
   createOrGetShareLink: procedure
+    .meta({
+      summary: 'Get Document Share Link',
+      description: 'Completed your Document Signature. Get Document Share Link.',
+    })
     .input(ZCreateOrGetShareLinkMutationSchema)
+    .output(ZCreateOrGetShareLinkMutationOutputSchema)
     .mutation(async ({ ctx, input }) => {
       try {
         const { documentId, token } = input;

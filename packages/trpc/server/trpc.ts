@@ -1,11 +1,12 @@
 import { TRPCError, initTRPC } from '@trpc/server';
+import { OperationMeta } from 'openapi-trpc';
 import SuperJSON from 'superjson';
 
 import { isAdmin } from '@documenso/lib/next-auth/guards/is-admin';
 
 import { TrpcContext } from './context';
 
-const t = initTRPC.context<TrpcContext>().create({
+const t = initTRPC.context<TrpcContext>().meta<OperationMeta>().create({
   transformer: SuperJSON,
 });
 

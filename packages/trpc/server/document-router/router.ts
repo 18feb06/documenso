@@ -11,18 +11,30 @@ import { setRecipientsForDocument } from '@documenso/lib/server-only/recipient/s
 
 import { authenticatedProcedure, procedure, router } from '../trpc';
 import {
+  ZCreateDocumentMutationOutputSchema,
   ZCreateDocumentMutationSchema,
+  ZDeleteDraftDocumentMutationOutputSchema,
   ZDeleteDraftDocumentMutationSchema,
+  ZGetDocumentByIdQueryOutputSchema,
   ZGetDocumentByIdQuerySchema,
+  ZGetDocumentByTokenQueryOutputSchema,
   ZGetDocumentByTokenQuerySchema,
+  ZSendDocumentMutationOutputSchema,
   ZSendDocumentMutationSchema,
+  ZSetFieldsForDocumentMutationOutputSchema,
   ZSetFieldsForDocumentMutationSchema,
+  ZSetRecipientsForDocumentMutationOutputSchema,
   ZSetRecipientsForDocumentMutationSchema,
 } from './schema';
 
 export const documentRouter = router({
   getDocumentById: authenticatedProcedure
+    .meta({
+      summary: 'Get Document by [id]',
+      description: 'Search or get Document by [id]. (Requires to be Authenticated).',
+    })
     .input(ZGetDocumentByIdQuerySchema)
+    .output(ZGetDocumentByIdQueryOutputSchema)
     .query(async ({ input, ctx }) => {
       try {
         const { id } = input;
@@ -41,25 +53,37 @@ export const documentRouter = router({
       }
     }),
 
-  getDocumentByToken: procedure.input(ZGetDocumentByTokenQuerySchema).query(async ({ input }) => {
-    try {
-      const { token } = input;
+  getDocumentByToken: procedure
+    .meta({
+      summary: 'Get Document by [token]',
+      description: 'Search or get Document by [token].',
+    })
+    .input(ZGetDocumentByTokenQuerySchema)
+    .output(ZGetDocumentByTokenQueryOutputSchema)
+    .query(async ({ input }) => {
+      try {
+        const { token } = input;
 
-      return await getDocumentAndSenderByToken({
-        token,
-      });
-    } catch (err) {
-      console.error(err);
+        return await getDocumentAndSenderByToken({
+          token,
+        });
+      } catch (err) {
+        console.error(err);
 
-      throw new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'We were unable to find this document. Please try again later.',
-      });
-    }
-  }),
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'We were unable to find this document. Please try again later.',
+        });
+      }
+    }),
 
   createDocument: authenticatedProcedure
+    .meta({
+      summary: 'Create Document',
+      description: 'Create a new Document. (Requires to be Authenticated).',
+    })
     .input(ZCreateDocumentMutationSchema)
+    .output(ZCreateDocumentMutationOutputSchema)
     .mutation(async ({ input, ctx }) => {
       try {
         const { title, documentDataId } = input;
@@ -92,7 +116,13 @@ export const documentRouter = router({
     }),
 
   deleteDraftDocument: authenticatedProcedure
+    .meta({
+      summary: 'Delete Document',
+      description:
+        'Delete dcoument. Only possible if {document.status===DRAFT}. (Requires to be Authenticated).',
+    })
     .input(ZDeleteDraftDocumentMutationSchema)
+    .output(ZDeleteDraftDocumentMutationOutputSchema)
     .mutation(async ({ input, ctx }) => {
       try {
         const { id } = input;
@@ -111,7 +141,12 @@ export const documentRouter = router({
     }),
 
   setRecipientsForDocument: authenticatedProcedure
+    .meta({
+      summary: 'Add Signers for Document',
+      description: 'Add signers for Document. (Requires to be Authenticated).',
+    })
     .input(ZSetRecipientsForDocumentMutationSchema)
+    .output(ZSetRecipientsForDocumentMutationOutputSchema)
     .mutation(async ({ input, ctx }) => {
       try {
         const { documentId, recipients } = input;
@@ -133,7 +168,12 @@ export const documentRouter = router({
     }),
 
   setFieldsForDocument: authenticatedProcedure
+    .meta({
+      summary: 'Add Fields for Document',
+      description: 'Add Fields for Document. (Requires to be Authenticated).',
+    })
     .input(ZSetFieldsForDocumentMutationSchema)
+    .output(ZSetFieldsForDocumentMutationOutputSchema)
     .mutation(async ({ input, ctx }) => {
       try {
         const { documentId, fields } = input;
@@ -154,7 +194,13 @@ export const documentRouter = router({
     }),
 
   sendDocument: authenticatedProcedure
+    .meta({
+      summary: 'Send Document Signature Invitation',
+      description:
+        'Send invitation email to recipients for signing document. (Requires to be Authenticated).',
+    })
     .input(ZSendDocumentMutationSchema)
+    .output(ZSendDocumentMutationOutputSchema)
     .mutation(async ({ input, ctx }) => {
       try {
         const { documentId } = input;

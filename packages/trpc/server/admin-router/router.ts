@@ -3,11 +3,19 @@ import { TRPCError } from '@trpc/server';
 import { updateUser } from '@documenso/lib/server-only/admin/update-user';
 
 import { adminProcedure, router } from '../trpc';
-import { ZUpdateProfileMutationByAdminSchema } from './schema';
+import {
+  ZUpdateProfileMutationByAdminOutputSchema,
+  ZUpdateProfileMutationByAdminSchema,
+} from './schema';
 
 export const adminRouter = router({
   updateUser: adminProcedure
+    .meta({
+      summary: 'Update User (as Admin)',
+      description: 'Update User. (Requires to be Admin).',
+    })
     .input(ZUpdateProfileMutationByAdminSchema)
+    .output(ZUpdateProfileMutationByAdminOutputSchema)
     .mutation(async ({ input }) => {
       const { id, name, email, roles } = input;
 
