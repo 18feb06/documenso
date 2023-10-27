@@ -6,7 +6,7 @@ export default function ApiDocs() {
   const redoc = Redoc.init('/openapi.json', {
     theme: {
       rightPanel: {
-        backgroundColor: '#2A873A',
+        backgroundColor: '#6A904F',
         width: '35%',
       },
       sidebar: {
