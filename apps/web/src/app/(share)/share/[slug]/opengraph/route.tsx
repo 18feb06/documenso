@@ -54,7 +54,7 @@ export async function GET(_request: Request, { params: { slug } }: SharePageOpen
       return sender.name || sender.email;
     });
 
-  return new ImageResponse(
+  const imageResponse = new ImageResponse(
     (
       <div tw="relative flex h-full w-full">
         {/* @ts-expect-error Lack of typing from ImageResponse */}
@@ -151,4 +151,8 @@ export async function GET(_request: Request, { params: { slug } }: SharePageOpen
       ],
     },
   );
+
+  imageResponse.headers.set('Access-Control-Allow-Origin', '*');
+
+  return imageResponse;
 }
