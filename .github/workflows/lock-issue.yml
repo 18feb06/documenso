@@ -1,0 +1,39 @@
+name: Lock Issue Workflow
+
+on:
+  issues:
+    types:
+      - opened
+      - labeled
+
+jobs:
+  lock_issue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if the 'public' label is present
+        id: check_label
+        run: echo ::set-output name=label::${{ github.event.label.name }}
+        if: github.event_name == 'labeled'
+
+      - name: Lock Issue
+        if: github.event_name == 'opened' || steps.check_label.outputs.label == 'public'
+        run: |
+          issue_number=${{ github.event.issue.number }}
+          owner=${{ github.event.repository.owner.login }}
+          repo=${{ github.event.repository.name }}
+          token=$GITHUB_TOKEN
+          curl -X POST "https://api.github.com/repos/$owner/$repo/issues/$issue_number/lock" -H "Authorization: token $token"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Unlock Issue
+        if: github.event_name == 'unlabeled' && steps.check_label.outputs.label == 'public'
+        run: |
+          issue_number=${{ github.event.issue.number }}
+          owner=${{ github.event.repository.owner.login }}
+          repo=${{ github.event.repository.name }}
+          token=$GITHUB_TOKEN
+          curl -X DELETE "https://api.github.com/repos/$owner/$repo/issues/$issue_number/lock" -H "Authorization: token $token"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
